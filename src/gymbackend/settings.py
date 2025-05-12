@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
+from decouple import config, AutoConfig, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -163,3 +166,13 @@ PAYMENT_CALLBACK_DOMAIN = "http://localhost:8000"  # need to change later
 # Or if frontend handles the immediate redirect and then calls backend:
 # FRONTEND_PAYMENT_SUCCESS_URL = "http://localhost:3000/payment/success"
 # FRONTEND_PAYMENT_FAILURE_URL = "http://localhost:3000/payment/failure"
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0' 
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
