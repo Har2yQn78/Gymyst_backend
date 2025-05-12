@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 from pathlib import Path
 from datetime import timedelta
-from pathlib import Path
 from decouple import config, AutoConfig, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0d@8np3h#vq1$y-xl1o1uji9a%wx@wiyoj6c3_e%j_^n6@vgf7'
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-0d@8np3h#vq1$y-xl1o1uji9a%wx@wiyoj6c3_e%j_^n6@vgf7')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
 
 
 # Application definition
@@ -176,3 +175,12 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+
+OPENROUTER_API_KEY = config("OPENROUTER_API_KEY", default=None)
+OPENROUTER_API_BASE = config("OPENROUTER_API_BASE", default="https://openrouter.ai/api/v1")
+LLM_MODEL_NAME = config("LLM_MODEL_NAME", default="deepseek/deepseek-chat:free")
+
+
+WORKOUT_PLAN_GENERATION_INTERVAL_DAYS = config('WORKOUT_PLAN_GENERATION_INTERVAL_DAYS', default=7, cast=int)
+WORKOUT_PLAN_ACTIVE_DURATION_DAYS = config('WORKOUT_PLAN_ACTIVE_DURATION_DAYS', default=7, cast=int)
